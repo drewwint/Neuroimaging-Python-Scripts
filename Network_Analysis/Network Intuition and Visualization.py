@@ -172,7 +172,7 @@ interp1d([min(degree_total),max(degree_total)],degree_total)
 # Plotting networks. 
 
   # creating a directed graph - using a function 
-    #> This function creates a graph using nx then 
+    #> This function creates a directed graph using nx then 
       #> draws it usign the spring layout 
       #> coloring the edges blue
       #> coloring nodes usign the previously identified communities
