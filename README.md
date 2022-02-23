@@ -1,2 +1,2 @@
 # Neuroimaging-Python-Scripts
-A series of statistial analysis scripts I recoded from matlab to Python for open-source use 
+A series of analysis scripts for imaging analyses in Python for open-source use 
