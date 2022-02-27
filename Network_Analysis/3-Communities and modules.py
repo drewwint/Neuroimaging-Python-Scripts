@@ -8,14 +8,14 @@ import numpy as np      #
 import networkx as nx   # for network analysis
 import bct              # brain connectivity toolbox
 
-# to estimate communities, we run the louvain algorithm. We need to repeat
-# the algorithm multiple times due to its non-deterministic nature.
+# to estimate communities, we run the louvain algorithm. 
+  # We need to repeat the algorithm multiple times due to its non-deterministic nature.
 num_reps  = 10
 num_nodes = len(cij)
 
 # estimating communities
-##  run louvain algorithm num_reps times, retaining community estimates and
-##  quality for each repetition.
+  ##  run louvain algorithm num_reps times, retaining community estimates and
+  ##  quality for each repetition.
 
 ci = np.zeros([num_nodes,num_reps])
 q = []
@@ -79,8 +79,6 @@ sctt=ax.scatter3D(coor[0],coor[1],coor[2], c=cicon, s=sz/4) ## put the values he
 #fig.colorbar(sctt, ax = ax) ## adding colorbar 
   ax.view_init(100, -90)
   #ax.invert_yaxis()
-  #ax.invert_xaxis()
-  #ax.invert_zaxis()
 plt.show() plt.clf()
 
 
@@ -91,7 +89,7 @@ plt.show() plt.clf()
 labels = pd.unique(system_labels[0])
 
 #  to estimate communities, we run the louvain algorithm. We need to repeat
-# the algorithm multiple times due to its non-deterministic nature.
+  # the algorithm multiple times due to its non-deterministic nature.
 num_nodes   = np.size(cij,1)
 num_reps    = 5
 
