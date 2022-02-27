@@ -9,7 +9,7 @@ import numpy as np
 
 import networkx as nx # for network analysis
 import bct # brain connectivity toolbox
-  ## note info on brian connectivyt toolbox for python can be found here
+  ## note info on brian connectivity toolbox for python can be found here
     # https://github.com/aestrivex/bctpy 
 
 
@@ -122,10 +122,10 @@ btwn_wei = btwn_wei/((N - 1)*(N - 2))
 
 import scipy 
 rank_matrix = scipy.stats.rankdata([deg,stre,btwn_bin,btwn_wei], axis = 1)/1000
-  ## note - I divide by 1000 and I get the exact same number as matlab :) 
+  ## note - I divide by 1000 and I get the expected values
 
 ave_rank = np.mean(rank_matrix,axis=0)*1000
-  ## note I times by 1000 and I get the same values as matlab...? 
+  ## note I multiply by 1000 and I get the expected values
   
 
 ## Plotting Hubs
@@ -134,12 +134,10 @@ ave_rank = np.mean(rank_matrix,axis=0)*1000
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-sctt=ax.scatter3D(coor[0],coor[1],coor[2], c=ave_rank, s=ave_rank/15) ## put the values here to plot
+sctt=ax.scatter3D(coor[0],coor[1],coor[2], c=ave_rank, s=ave_rank/15) 
 fig.colorbar(sctt, ax = ax) ## adding colorbar 
   #ax.view_init(-130, -150)
   #ax.invert_yaxis()
-  #ax.invert_xaxis()
-  #ax.invert_zaxis()
 plt.show() plt.clf()
 
 
