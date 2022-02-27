@@ -1,6 +1,6 @@
 
 
-# Network Analysis 1: Network Intuition and Visualization 
+# Network Intuition and Visualization 
 
 
 import matplotlib.pyplot as plt ## for plotting 
