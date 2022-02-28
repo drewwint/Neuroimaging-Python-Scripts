@@ -340,9 +340,7 @@ plt.show(), plt.clf(), plt.cla()
 
 
 
-# still to do - create lasso plot like matlab
-  # Same as lassoPlot in matlab
-    # cite: https://sprjg.github.io/posts/lassoplot_in_python/ 
+# still to do - create lasso plot plotting MSE for each corss validation
 
 
 
