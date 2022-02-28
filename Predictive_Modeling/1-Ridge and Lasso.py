@@ -7,17 +7,18 @@
   #> Before we hit Ridge and Lasso, let us revisit OLS briefly in the context 
     #> of predictive modeling, and investigate how quantity of training data 
     #> influences the quality of the prediction.
-  #> 
-
 
 
 import matplotlib.pyplot as plt
-import seaborn as sns   #
-import pandas as pd     #  
-import numpy as np      # 
-import networkx as nx   # for network analysis
-import bct              # brain connectivity toolbox
-
+import seaborn as sns                             #
+import pandas as pd                               #  
+import numpy as np                                # 
+from sklearn.preprocessing import StandardScaler  # To standardize 
+from sklearn.linear_model import RidgeCV          # Cross validation for Ridge regression 
+from sklearn.linear_model import Ridge            # Ridge regression 
+from sklearn.metrics import mean_squared_error    # RMSE calculation 
+from sklearn import linear_model                  # Regression models
+from sklearn.linear_model import LassoCV          # Corss Validation for Lasso regression 
 
 
 
@@ -122,6 +123,8 @@ plt.scatter(xtrain,ytrain,label="Train Data", c="red",s=50),
 
 
                      #### Ridge Regression ####
+ 
+
     #> A critical aspect of OLS is the need to calculate the inversion of the matrix
     #> But there can be situations where this matrix is badly conditioned 
       #> (meaning that it is not really invertable), which can happen if we have 
@@ -184,11 +187,6 @@ print("condition 1 = ", cond1, "condition 2 = ", cond2)
   
   ## They already split the data above with X/YTrain (for train) and X/YTune
 
-from sklearn.linear_model import Ridge
-# not used: from sklearn import preprocessing
-from sklearn.metrics import mean_squared_error
-  # or could do this and youd have to referr to sklearn.metrics.mean_squared_error()
-  # import sklearn.metrics
 
 # lambda ridge penalty
 ks = np.arange(0,0.2005,0.005)
@@ -247,8 +245,6 @@ plt.show(), plt.clf(), plt.cla()
 
 # Identifying the optimal lambda parameter
   # to do so we will use Cross Validation 
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import RidgeCV
 
 scaler = StandardScaler()
 
@@ -300,6 +296,8 @@ plt.show(), plt.clf(), plt.cla()
 
 
               #### Lasso Regression #####
+
+
   # lasso is similar to ridge regression only the penalty is different 
     #> while Ridge Regression will penalize all parameters, 
       #> Lasso can result in driving some parameters to zero, 
@@ -307,8 +305,7 @@ plt.show(), plt.clf(), plt.cla()
     #> The cost function for Lasso is, where now the penalty is linear in beta 
       #> (what is known as the norm, while Ridge uses the norm): 
 
-from sklearn import linear_model
-from sklearn.linear_model import LassoCV
+
 
 # since we will do cross validation - go ahead and put train and tune DFs together
 XBunch = pd.concat([XTrain,XTune])
