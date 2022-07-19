@@ -1,13 +1,15 @@
 
 # Communities and Modules
 
-import matplotlib.pyplot as plt     # plotting
-import seaborn as sns               # plotting
-import pandas as pd                 # dataframes
-import numpy as np                  # data manipulation
-import networkx as nx               # for network analysis
-import bct                          # brain connectivity toolbox
-from joblib import parallel_backend # parallel processing
+import matplotlib.pyplot as plt                 # plotting
+import seaborn as sns                           # plotting
+import pandas as pd                             # dataframes
+import numpy as np                              # data manipulation
+import networkx as nx                           # for network analysis
+import bct                                      # brain connectivity toolbox
+from sklearn.metrics import adjusted_rand_score # zrand score
+from joblib import parallel_backend             # parallel processing
+
 
 # to estimate communities, we run the louvain algorithm. 
   # We need to repeat the algorithm multiple times due to its non-deterministic nature.
@@ -125,8 +127,7 @@ with parallel_backend('threading', n_jobs=12):
     for ii in range(0,num_reps):
       print(ii)
       ci[:,ii,i] = bct.community_louvain((in_val + np.array(cij)),gamma)[0]
-      norm = np.random.normal(ci[:,ii,i])
-      d[ii,i] = np.mean(scipy.stats.zscore(norm))
+      d[ii,i] = adjusted_rand_score(np.array(system_labels[0]),ci[:,ii,i])
 
   # finding the value at gamma zrand is peaked
     # findign values for each
