@@ -111,15 +111,13 @@ num_gamma   = len(gamma_range)
 
 
 
-# % preallocate some arrays to store communities and similarity scores
+# preallocate some arrays to store communities and similarity scores
 ci = np.zeros([num_nodes,num_reps,num_gamma]);
 d = np.empty([num_reps,num_gamma])
 d[:] = np.NaN 
 
 
   ## to adjust values to all positive so the louvain will work
-  # NOTE: Inspect your data first - this example data had negative values. 
-in_val = abs(min(list(map(min,np.array(cij)))))
 
 from joblib import parallel_backend
 with parallel_backend('threading', n_jobs=12): 
@@ -127,7 +125,7 @@ with parallel_backend('threading', n_jobs=12):
     gamma = gamma_range[i]
     for ii in range(0,num_reps):
       print(ii)
-      ci[:,ii,i] = bct.community_louvain((in_val + np.array(cij)),gamma)[0]
+      ci[:,ii,i] = bct.community_louvain( np.array(cij),gamma,'negative_asym')[0] ## negative_asym is to deal with negative values
       d[ii,i] = adjusted_rand_score(np.array(system_labels[0]),ci[:,ii,i])
 
   # finding the value at gamma zrand is peaked
