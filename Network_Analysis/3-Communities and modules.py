@@ -107,6 +107,41 @@ gamma_range = list(range_inc(0.5, 4.25, 0.25, 0))
 num_gamma   = len(gamma_range)
 
 
+
+# % preallocate some arrays to store communities and similarity scores
+ci = np.zeros([num_nodes,num_reps,num_gamma]);
+d = np.empty([num_reps,num_gamma])
+d[:] = np.NaN 
+
+
+for i in range(0,num_gamma):
+  gamma = gamma_range[i]
+  for ii in range(0,num_reps):
+    print(ii)
+    ci[:,ii,i] = bct.community_louvain(abs(np.array(cij)),gamma)[0]
+    norm = np.random.normal(ci[:,ii,i])
+    d[ii,i] = np.mean(scipy.stats.zscore(norm))
+
+  # finding the value at gamma zrand is peaked
+    # findign values for each
+peaks =[]
+for i in d:
+  peaks.append(max(i))
+
+    # peak of all max values    
+peak_gamma = max(peaks)
+num_reps = 100
+ci       = np.zeros([num_nodes,num_reps]);
+
+for i in range(0,num_reps):
+  ci[:,i] = bct.community_louvain(abs(np.array(cij)),gamma)[0]
+
+# calculate consensus communities 
+thr = 0.5
+d = bct.agreement(ci)/num_reps
+cicon = bct.consensus_und(d,thr,num_reps)
+
+
 ## Yet to do - plotting 
 
 
