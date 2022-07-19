@@ -118,6 +118,7 @@ d[:] = np.NaN
 
 
   ## to adjust values to all positive so the louvain will work
+  # NOTE: Inspect your data first - this example data had negative values. 
 in_val = abs(min(list(map(min,np.array(cij)))))
 
 from joblib import parallel_backend
