@@ -1,12 +1,13 @@
 
 # Communities and Modules
 
-import matplotlib.pyplot as plt
-import seaborn as sns   #
-import pandas as pd     #  
-import numpy as np      # 
-import networkx as nx   # for network analysis
-import bct              # brain connectivity toolbox
+import matplotlib.pyplot as plt     # plotting
+import seaborn as sns               # plotting
+import pandas as pd                 # dataframes
+import numpy as np                  # data manipulation
+import networkx as nx               # for network analysis
+import bct                          # brain connectivity toolbox
+from joblib import parallel_backend # parallel processing
 
 # to estimate communities, we run the louvain algorithm. 
   # We need to repeat the algorithm multiple times due to its non-deterministic nature.
@@ -114,13 +115,18 @@ d = np.empty([num_reps,num_gamma])
 d[:] = np.NaN 
 
 
-for i in range(0,num_gamma):
-  gamma = gamma_range[i]
-  for ii in range(0,num_reps):
-    print(ii)
-    ci[:,ii,i] = bct.community_louvain(abs(np.array(cij)),gamma)[0]
-    norm = np.random.normal(ci[:,ii,i])
-    d[ii,i] = np.mean(scipy.stats.zscore(norm))
+  ## to adjust values to all positive so the louvain will work
+in_val = abs(min(list(map(min,np.array(cij)))))
+
+from joblib import parallel_backend
+with parallel_backend('threading', n_jobs=12): 
+  for i in range(0,num_gamma):
+    gamma = gamma_range[i]
+    for ii in range(0,num_reps):
+      print(ii)
+      ci[:,ii,i] = bct.community_louvain((in_val + np.array(cij)),gamma)[0]
+      norm = np.random.normal(ci[:,ii,i])
+      d[ii,i] = np.mean(scipy.stats.zscore(norm))
 
   # finding the value at gamma zrand is peaked
     # findign values for each
@@ -133,13 +139,17 @@ peak_gamma = max(peaks)
 num_reps = 100
 ci       = np.zeros([num_nodes,num_reps]);
 
-for i in range(0,num_reps):
-  ci[:,i] = bct.community_louvain(abs(np.array(cij)),gamma)[0]
+with parallel_backend('threading', n_jobs=12): 
+  for i in range(0,num_reps):
+    ci[:,i] = bct.community_louvain(abs(np.array(cij)),gamma)[0]
 
 # calculate consensus communities 
 thr = 0.5
-d = bct.agreement(ci)/num_reps
-cicon = bct.consensus_und(d,thr,num_reps)
+with parallel_backend('threading', n_jobs=12): 
+  d = bct.agreement(ci)/num_reps
+
+with parallel_backend('threading', n_jobs=12): 
+  cicon = bct.consensus_und(d,thr,num_reps)
 
 
 ## Yet to do - plotting 
