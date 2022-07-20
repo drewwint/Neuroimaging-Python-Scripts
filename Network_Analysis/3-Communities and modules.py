@@ -97,7 +97,7 @@ num_nodes   = np.size(cij,1)
 num_reps    = 5
 
 
-# gamma a range list requires a function in python
+# gamma a range list
 def range_inc(start, stop, step, inc):
     i = start
     while i < stop:
@@ -116,9 +116,7 @@ ci = np.zeros([num_nodes,num_reps,num_gamma]);
 d = np.empty([num_reps,num_gamma])
 d[:] = np.NaN 
 
-
-  ## to adjust values to all positive so the louvain will work
-
+# calculating simularit
 from joblib import parallel_backend
 with parallel_backend('threading', n_jobs=12): 
   for i in range(0,num_gamma):
@@ -129,7 +127,7 @@ with parallel_backend('threading', n_jobs=12):
       d[ii,i] = adjusted_rand_score(np.array(system_labels[0]),ci[:,ii,i])
 
   # finding the value at gamma zrand is peaked
-    # findign values for each
+    # finding values for each
 peaks =[]
 for i in d:
   peaks.append(max(i))
