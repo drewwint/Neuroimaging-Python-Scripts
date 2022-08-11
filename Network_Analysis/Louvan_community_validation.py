@@ -1,8 +1,8 @@
 ###############################################################################
-### Code for validating Louvain Algorithm Community Detection #################
-### For Multiple Participants and estimating each individually ################
-###############################################################################
-### Code by: Drew E. Winters, PhD. ############################################
+#   Code validating Louvain Algorithm Community Detection                     #
+#   For Multiple Participants and estimating each individually                #
+#                                                                             #
+#   Code by: Drew E. Winters, PhD.                                            #
 ###############################################################################
 
 # the logic
